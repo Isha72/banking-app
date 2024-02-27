@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const [isClicked, setIsClicked] = useState(false);
+  const [balance, setBalance] = useState(1000); // Set your initial balance here
+
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4">Welcome to ABCD Bank</h1>
+      <h1 className="text-3xl font-bold mb-4 ml-20">Welcome to ABCD Bank</h1>
       <div className="flex justify-around items-center mt-4">
-        <Link to="/check-balance" className="card">
-          <h3 className="text-xl font-semibold mb-2">Check Balance</h3>
-          <p>View your account balance</p>
-        </Link>
+      <div
+      to="/check-balance"
+      className={`card p-4 border border-gray-300 rounded-md transition-transform transform ${
+        isClicked ? 'scale-105' : ''
+      } cursor-pointer`}
+      onClick={handleClick}
+    >
+      <h3 className="text-xl font-semibold mb-2">
+        {isClicked ? 'Available Balance' : 'Check Balance'}
+      </h3>
+      {isClicked && <p>Your current balance is: {balance}</p>}
+      {!isClicked && <p>View your account balance</p>}
+    </div>
 
         <Link to="/fund-transfer" className="card">
           <h3 className="text-xl font-semibold mb-2">Fund Transfer</h3>

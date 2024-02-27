@@ -16,37 +16,37 @@ const Login = () => {
   };
 
   return (
-    <div className=" bg-blue-400">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-3 items-center my-20"
-      >
-        <h1 className=" ">Login</h1>
-        {/* <Users size={50} /> */}
+<div className="bg-beige-200 min-h-screen flex items-center justify-center">
+  <form onSubmit={handleSubmit} className="flex flex-col gap-3 items-center">
+    <h1 className="text-2xl font-bold">Login</h1>
+    {/* <Users size={50} /> */}
 
-        <input
-          type="text"
-          placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+    <input
+      type="text"
+      placeholder="Username"
+      onChange={(e) => setUsername(e.target.value)}
+      className="p-2 border border-gray-400 rounded-md"
+    />
+    <input
+      type="password"
+      placeholder="Password"
+      onChange={(e) => setPassword(e.target.value)}
+      className="p-2 border border-gray-400 rounded-md"
+    />
 
-        <button type="submit" className="p-2 bg-blue-700 text-white rounded-md">
-          Login
-        </button>
+    <button type="submit" className="p-2 bg-blue-700 text-white rounded-md">
+      Login
+    </button>
 
-        <p>
-          Don't have an account?{" "}
-          <Link to="/register" className="pl-1 text-red-700 underline">
-            Register
-          </Link>
-        </p>
-      </form>
-    </div>
+    <p className="text-sm">
+      Don't have an account?{" "}
+      <Link to="/register" className="text-red-700 underline">
+        Register
+      </Link>
+    </p>
+  </form>
+</div>
+
   );
 };
 
