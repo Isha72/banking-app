@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const [isClicked, setIsClicked] = useState(false);
-  const [balance, setBalance] = useState(1000); // Set your initial balance here
+  const [balance, setBalance] = useState(1000); 
 
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4 ml-20">Welcome to ABCD Bank</h1>
+      <h1 className="text-3xl font-bold mb-4 ml-20">Welcome to SG Bank</h1>
       <div className="flex justify-around items-center mt-4">
       <div
       to="/check-balance"
