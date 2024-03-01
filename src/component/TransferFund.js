@@ -30,6 +30,11 @@ const TransferFund = () => {
       return;
     }
 
+    if (!/^[A-Za-z]{4}\d{4}$/.test(amount)) {
+        setErrorMessage('Please enter a valid amount');
+        return;
+      }
+
     const fullAccountNumber = `${ifscCode}${accountNumber}`;
 
     // Simulate a successful transfer
