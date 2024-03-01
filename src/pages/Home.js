@@ -10,7 +10,7 @@ const Home = () => {
   };
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4 ml-20">Welcome to SG Bank</h1>
+      <h1 className="text-3xl font-bold mb-4 mt-4 ml-20">Welcome to SG Bank</h1>
       <div className="flex justify-around items-center mt-4">
       <div
       to="/check-balance"

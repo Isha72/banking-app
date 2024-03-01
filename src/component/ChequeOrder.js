@@ -9,9 +9,11 @@ const ChequeOrder = () => {
   };
 
   const applyForChequeBook = () => {
-    // You can implement the logic for applying for a cheque book here
-    // For demonstration purposes, let's just show the success modal
-    setShowSuccessModal(true);
+    if (selectedPages) {
+      setShowSuccessModal(true);
+    } else {
+      alert('Please select the number of pages before applying for a Cheque Book.');
+    }
   };
 
   const closeModal = () => {
@@ -27,6 +29,7 @@ const ChequeOrder = () => {
           value={selectedPages}
           onChange={handlePagesChange}
           className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          required 
         >
           <option value="">Select Pages</option>
           <option value="12">12 pages</option>
