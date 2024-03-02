@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Users } from "@phosphor-icons/react";
 import { Link, useNavigate } from "react-router-dom";
 import socgen from "../assets/images/socgen-bg3.jpg";
+import { login } from "../services/user-service";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
@@ -14,14 +18,14 @@ const Login = () => {
   const validateForm = () => {
     let isValid = true;
 
-    if (!email.trim()) {
+    if (!data.email.trim()) {
       setEmailError("Email is required!!");
       isValid = false;
     } else {
       setEmailError("");
     }
 
-    if (!password.trim()) {
+    if (!data.password.trim()) {
       setPasswordError("Password is required!!");
       isValid = false;
     } else {
@@ -31,11 +35,29 @@ const Login = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = (event, property) => {
+    setData({ ...data, [property]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log(data);
 
     if (validateForm()) {
-      navigate("/home");
+      login(data)
+        .then((resp) => {
+          console.log(resp);
+          console.log("success log");
+  
+          if (resp.ok) {
+            navigate("/home");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log("error log");
+        });
     }
   };
 
@@ -64,7 +86,8 @@ const Login = () => {
           type="email"
           placeholder="Email ID"
           id="email"
-          onChange={(e) => setEmail(e.target.value)}
+          value={data.email}
+          onChange={(e) => handleChange(e, "email")}
           className="p-2 border border-black rounded-md w-full mb-2"
         />
         {emailError && (
@@ -76,8 +99,9 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handleChange(e, "password")}
             id="password"
+            value={data.password}
             className="p-2 border border-black rounded-md w-full mt-2"
           />
           {passwordError && (

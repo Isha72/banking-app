@@ -17,56 +17,32 @@ const Register = () => {
   });
 
   const handleChange = (event, property) => {
-    setData({...data, [property]: event.target.value})
-  }
+    setData({ ...data, [property]: event.target.value });
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (password !== confirmPassword) {
-  //     alert("Passwords do not match");
-  //   } else {
-  //     const response = await fetch("http://localhost:8085/register", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         name: name,
-  //         email: email,
-  //         password: password,
-  //         confirmPassword: confirmPassword,
-  //       }),
-  //     });
-
-  //     const responseData = await response.json();
-
-  //     if (response.ok) {
-  //       setIsModalOpen(true);
-  //     } else {
-  //       console.error(`Error: ${responseData}`);
-  //       alert("An error occurred while submitting the form");
-  //     }
-  //   }
-  // };
-
-  const handleSubmit = (event) =>{
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     console.log(data);
 
-    register(data).then((resp)=> {
-      console.log(resp);
-      console.log("success log");
-    }).catch((error) => {
-      console.log(error);
-      console.log("error log");
-    })
-  }
+    register(data)
+      .then((resp) => {
+        console.log(resp);
+        console.log("success log");
+
+        if (resp.ok) {
+          setIsModalOpen(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error log");
+      });
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
