@@ -11,8 +11,7 @@ const Home = () => {
   };
   return (
     <div>
-      <Navbar />
-
+<Navbar />
       <div className="flex justify-around items-center mt-4">
         <div
           to="/check-balance"
@@ -28,7 +27,7 @@ const Home = () => {
           {!isClicked && <p>View your account balance</p>}
         </div>
 
-        <Link to="/fund-transfer" className="card">
+        <Link to="/fund-transfer" className=" bg-gray-200 p-4 rounded-md">
           <h3 className="text-xl font-semibold mb-2">Fund Transfer</h3>
           <p>Transfer funds to another account</p>
         </Link>

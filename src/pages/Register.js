@@ -1,25 +1,72 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import socgen from "../assets/images/socgen-bg3.jpg";
+import { register } from "../services/user-service";
 
 const Register = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [data, setData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [error, setError] = useState({
+    errors: {},
+    isError: false,
+  });
+
+  const handleChange = (event, property) => {
+    setData({...data, [property]: event.target.value})
+  }
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-    } else {
-      setIsModalOpen(true);
-    }
-  };
+  //   if (password !== confirmPassword) {
+  //     alert("Passwords do not match");
+  //   } else {
+  //     const response = await fetch("http://localhost:8085/register", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         name: name,
+  //         email: email,
+  //         password: password,
+  //         confirmPassword: confirmPassword,
+  //       }),
+  //     });
+
+  //     const responseData = await response.json();
+
+  //     if (response.ok) {
+  //       setIsModalOpen(true);
+  //     } else {
+  //       console.error(`Error: ${responseData}`);
+  //       alert("An error occurred while submitting the form");
+  //     }
+  //   }
+  // };
+
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+
+    console.log(data);
+
+    register(data).then((resp)=> {
+      console.log(resp);
+      console.log("success log");
+    }).catch((error) => {
+      console.log(error);
+      console.log("error log");
+    })
+  }
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -48,9 +95,10 @@ const Register = () => {
 
         <input
           type="text"
-          id="name"
+          id="username"
+          value={data.username}
           placeholder="Enter your Full Name"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => handleChange(e, "username")}
           className="p-2 border border-black rounded-md mb-2"
           required
         />
@@ -60,8 +108,9 @@ const Register = () => {
         <input
           type="email"
           id="email"
+          value={data.email}
           placeholder="Enter your Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => handleChange(e, "email")}
           className="p-2 border border-black rounded-md mb-2"
           required
         />
@@ -71,8 +120,9 @@ const Register = () => {
         <input
           type="password"
           placeholder="Enter your Password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => handleChange(e, "password")}
           id="password"
+          value={data.password}
           className="p-2 border border-black rounded-md mb-2"
           required
         />
@@ -82,7 +132,9 @@ const Register = () => {
         <input
           type="password"
           placeholder="Confirm Password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={data.confirmPassword}
+          id="confirmPassword"
+          onChange={(e) => handleChange(e, "confirmPassword")}
           className="p-2 border border-black rounded-md mb-6"
           required
         />

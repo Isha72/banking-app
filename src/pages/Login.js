@@ -15,14 +15,14 @@ const Login = () => {
     let isValid = true;
 
     if (!email.trim()) {
-      setEmailError("Email is required");
+      setEmailError("Email is required!!");
       isValid = false;
     } else {
       setEmailError("");
     }
 
     if (!password.trim()) {
-      setPasswordError("Password is required");
+      setPasswordError("Password is required!!");
       isValid = false;
     } else {
       setPasswordError("");
@@ -53,7 +53,7 @@ const Login = () => {
     >
       <form
         onSubmit={handleSubmit}
-        className=" bg-gray-400 flex flex-col p-8 mr-28 rounded-lg h-1/2 w-3/12 mt-10 "
+        className=" bg-gray-400 flex flex-col p-8 mr-28 rounded-lg h-fit w-3/12 mt-10 "
       >
         <h1 className="text-3xl font-bold text-black mb-8">
           Sign in to your account
