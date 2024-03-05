@@ -49,6 +49,15 @@ const Register = () => {
     navigate("/");
   };
 
+  const handleNameChange = (e) => {
+    const inputValue = e.target.value;
+
+    // Use a regular expression to allow only alphabets
+    if (/^[a-zA-Z\s]*$/.test(inputValue)) {
+      setName(inputValue);
+    }
+  };
+
   return (
     <div
       style={{
