@@ -8,7 +8,6 @@ const TransHistory = () => {
         { serialNumber: 4, transactionId: 'TX126', transactionType: 'Fund Transfer', dateTime: '2022-02-28 10:00 AM', amount: 20200.00 },
         { serialNumber: 5, transactionId: 'TX127', transactionType: 'Deposit', dateTime: '2022-02-28 02:30 PM', amount: 30.75 },
       ];
-      
 
   return (
     <div className="max-w-2xl mx-auto mt- p-4 bg-white rounded shadow-md">

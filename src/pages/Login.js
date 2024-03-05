@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { Users } from "@phosphor-icons/react";
 import { Link, useNavigate } from "react-router-dom";
+import socgen from "../assets/images/socgen-bg3.jpg";
+import { login } from "../services/user-service";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
@@ -13,15 +18,15 @@ const Login = () => {
   const validateForm = () => {
     let isValid = true;
 
-    if (!email.trim()) {
-      setEmailError("Email is required");
+    if (!data.email.trim()) {
+      setEmailError("Email is required!!");
       isValid = false;
     } else {
       setEmailError("");
     }
 
-    if (!password.trim()) {
-      setPasswordError("Password is required");
+    if (!data.password.trim()) {
+      setPasswordError("Password is required!!");
       isValid = false;
     } else {
       setPasswordError("");
@@ -30,46 +35,97 @@ const Login = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = (event, property) => {
+    setData({ ...data, [property]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log(data);
 
     if (validateForm()) {
-      navigate("/home");
+      login(data)
+        .then((resp) => {
+          console.log(resp);
+          console.log("success log");
+  
+          if (resp.ok) {
+            navigate("/home");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log("error log");
+        });
     }
   };
 
   return (
-    <div className="bg-beige-200 min-h-screen flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3 items-center">
-        <h1 className="text-2xl font-bold">Login</h1>
+    <div
+      style={{
+        backgroundImage: `url(${socgen})`,
+        backdropFilter: "blur(10px)",
+        height: "100vh",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+      className=" flex justify-end"
+    >
+      <form
+        onSubmit={handleSubmit}
+        className=" bg-gray-400 flex flex-col p-8 mr-28 rounded-lg h-fit w-3/12 mt-10 "
+      >
+        <h1 className="text-3xl font-bold text-black mb-8">
+          Sign in to your account
+        </h1>
 
+        <label className=" mb-2 font-semibold">Your Email</label>
         <input
           type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          className="p-2 border border-gray-400 rounded-md"
+          placeholder="Email ID"
+          id="email"
+          value={data.email}
+          onChange={(e) => handleChange(e, "email")}
+          className="p-2 border border-black rounded-md w-full mb-2"
         />
-        {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
+        {emailError && (
+          <p className="text-red-600 text-sm mb-2 ml-1">{emailError}</p>
+        )}
 
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          className="p-2 border border-gray-400 rounded-md"
-        />
-        {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+        <label className=" mt-4 mb-4 font-semibold">
+          Your Password
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => handleChange(e, "password")}
+            id="password"
+            value={data.password}
+            className="p-2 border border-black rounded-md w-full mt-2"
+          />
+          {passwordError && (
+            <p className="text-red-600 text-sm mt-2 ml-1 font-normal">
+              {passwordError}
+            </p>
+          )}
+        </label>
 
-        <button type="submit" className="p-2 bg-blue-700 text-white rounded-md">
+        <button
+          type="submit"
+          className="p-2 bg-gray-900 text-white rounded-md font-bold mb-4 mt-4"
+        >
           Login
         </button>
 
-        <p className="text-sm">
+        <p className="mt-2 font-bold">
           Don't have an account?{" "}
           <Link to="/register" className="text-red-700 underline">
             Register
           </Link>
         </p>
       </form>
+      {/* </div> */}
     </div>
   );
 };
