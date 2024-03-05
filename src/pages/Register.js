@@ -25,6 +25,15 @@ const Register = () => {
     navigate("/");
   };
 
+  const handleNameChange = (e) => {
+    const inputValue = e.target.value;
+
+    // Use a regular expression to allow only alphabets
+    if (/^[a-zA-Z\s]*$/.test(inputValue)) {
+      setName(inputValue);
+    }
+  };
+
   return (
     <div className="bg-beige-200 min-h-screen flex items-center justify-center">
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 items-center">
@@ -33,30 +42,31 @@ const Register = () => {
         <input
           type="text"
           placeholder="Enter Your full name"
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
+          value={name}
           className="p-2 border border-gray-400 rounded-md"
-          required 
+          required
         />
         <input
           type="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
           className="p-2 border border-gray-400 rounded-md"
-          required 
+          required
         />
         <input
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
           className="p-2 border border-gray-400 rounded-md"
-          required 
+          required
         />
         <input
           type="password"
           placeholder="Confirm Password"
           onChange={(e) => setConfirmPassword(e.target.value)}
           className="p-2 border border-gray-400 rounded-md"
-          required 
+          required
         />
 
         <button type="submit" className="p-2 bg-blue-700 text-white rounded-md">
