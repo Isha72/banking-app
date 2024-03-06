@@ -1,14 +1,42 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { getAccount } from "../services/account-services";
 
-const Home = () => {
+const Home = ({id}) => {
   const [isClicked, setIsClicked] = useState(false);
-  const [balance, setBalance] = useState(1000);
 
-  const handleClick = () => {
-    setIsClicked(!isClicked);
+  const [showBalance, setShowBalance] = useState(false);
+  const [balance, setBalance] = useState(0);
+
+
+  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
+
+  // const handleCheckBalance = async () => {
+  //   try {
+  //     const data = await getAccount(id);
+  //     setBalance(data.balance); // assuming balance is a field in the returned object
+  //     setShowBalance(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const handleClick = async () => {
+    // Fetch balance here if needed 
+
+    try {
+      const data = await getAccount(id);
+      setBalance(data.balance); // assuming balance is a field in the returned object
+      setShowBalance(true);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setIsBalanceVisible(!isBalanceVisible);
   };
+
+  
   return (
     <div>
 <Navbar />
@@ -20,11 +48,11 @@ const Home = () => {
           } cursor-pointer`}
           onClick={handleClick}
         >
-          <h3 className="text-xl font-semibold mb-2">
-            {isClicked ? "Available Balance" : "Check Balance"}
-          </h3>
-          {isClicked && <p>Your current balance is: {balance}</p>}
-          {!isClicked && <p>View your account balance</p>}
+        <h3 className="text-xl font-semibold mb-2">
+          {isBalanceVisible ? "Available Balance" : "Check Balance"}
+        </h3>
+        {isBalanceVisible && <p>Your current balance is: {balance}</p>}
+        {!isBalanceVisible && <p>View your account balance</p>}
         </div>
 
         <Link to="/fund-transfer" className=" bg-gray-200 p-4 rounded-md">

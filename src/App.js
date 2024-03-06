@@ -8,7 +8,7 @@ import TransHistory from "./components/TransHistory";
 import CreateAccount from "./pages/CreateAccount";
 import AdminDashboard from "./pages/AdminDashboard";
 import ChequeBookStatus from "./pages/ChequeBookStatus";
-import DepositWithdraw from "./component/DepositWithdraw";
+import DepositWithdraw from "./components/DepositWithdraw";
 
 function App() {
   return (

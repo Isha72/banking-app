@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getTransactionHistory } from '../services/account-services';
 
-const TransHistory = () => {
-    const transactionData = [
-        { serialNumber: 1, transactionId: 'TX123', transactionType: 'Deposit', dateTime: '2022-02-27 12:30 PM', amount: 1000.00 },
-        { serialNumber: 2, transactionId: 'TX124', transactionType: 'Fund Transfer', dateTime: '2022-02-27 01:45 PM', amount: 175.50 },
-        { serialNumber: 3, transactionId: 'TX125', transactionType: 'Withdrawal', dateTime: '2022-02-27 03:15 PM', amount: -50.00 },
-        { serialNumber: 4, transactionId: 'TX126', transactionType: 'Fund Transfer', dateTime: '2022-02-28 10:00 AM', amount: 20200.00 },
-        { serialNumber: 5, transactionId: 'TX127', transactionType: 'Deposit', dateTime: '2022-02-28 02:30 PM', amount: 30.75 },
-      ];
+const TransHistory = ({id}) => {
+
+  const [transactionData, setTransactionData] = useState([]);
+
+  useEffect(() => {
+    getTransactionHistory(id)
+      .then(data => setTransactionData(data))
+      .catch(error => console.error(error));
+  }, [id]);
 
   return (
     <div className="max-w-2xl mx-auto mt- p-4 bg-white rounded shadow-md">
@@ -23,13 +25,13 @@ const TransHistory = () => {
           </tr>
         </thead>
         <tbody>
-          {transactionData.map((transaction, index) => (
+          {transactionData?.map((transaction, index) => (
             <tr key={index} className={(index % 2 === 0) ? 'bg-gray-100' : ''}>
               <td className="border border-gray-300 p-2">{index + 1}</td>
-              <td className="border border-gray-300 p-2">{transaction.transactionId}</td>
-              <td className="border border-gray-300 p-2">{transaction.transactionType}</td>
-              <td className="border border-gray-300 p-2">{transaction.dateTime}</td>
-              <td className="border border-gray-300 p-2">{transaction.amount}</td>
+              <td className="border border-gray-300 p-2">{transaction?.transactionId}</td>
+              <td className="border border-gray-300 p-2">{transaction?.transactionType}</td>
+              <td className="border border-gray-300 p-2">{transaction?.dateTime}</td>
+              <td className="border border-gray-300 p-2">{transaction?.amount}</td>
             </tr>
           ))}
         </tbody>

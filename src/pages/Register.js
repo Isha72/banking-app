@@ -54,7 +54,7 @@ const Register = () => {
 
     // Use a regular expression to allow only alphabets
     if (/^[a-zA-Z\s]*$/.test(inputValue)) {
-      setName(inputValue);
+      data.username(inputValue);
     }
   };
 
